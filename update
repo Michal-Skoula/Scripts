@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo flatpak update -y
+sudo dnf update -y

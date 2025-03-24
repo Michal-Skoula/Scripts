@@ -1,0 +1,39 @@
+#!/bin/bash
+
+user=/home/michal
+branch="master"
+
+obsidian=$user/Documents/obsidian/Blog/
+blog=$user/Development/Projects/personal-website-v2/prezet
+
+if [ ! -e $obsidian ]; then
+	echo "Can't find Obsidian directory"
+	exit
+elif [ ! -e $blog ]; then
+	echo "Cant find Laravel Blog directory"
+	exit
+fi
+
+# Clear current blog files
+rm -r $blog
+mkdir $blog
+
+# Add .obsidian to .gitignore
+cd $blog
+echo -e ".obsidian" >> .gitignore
+
+# Copy over new blog files
+rsync -aPh $obsidian $blog
+
+# Commit to github
+cd $blog/../
+
+if [ ! -e .git ]; then
+	echo "No git repository initialized"
+	exit
+fi
+
+git add $blog/.
+git commit -m "Update blog"
+git push origin $branch
+
