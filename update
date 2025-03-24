@@ -2,3 +2,5 @@
 
 sudo flatpak update -y
 sudo dnf update -y
+
+#reboot
